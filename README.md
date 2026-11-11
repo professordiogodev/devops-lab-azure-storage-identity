@@ -131,6 +131,8 @@ Do the same with `id-reader`. The logs say `READ_OK` or `READ_DENIED` and `WRITE
 
 It reads your storage account, container, identities and role assignments, tries the account key (it must be refused), and then runs the two jobs itself and checks what each identity was allowed to do. It takes about 4 minutes. Fix what is red and run it again until it ends with **ALL CHECKS PASSED**. **Paste the output into `SUBMISSION.md` before you tear down.**
 
+> **Quota note.** If creating a container fails with a message about cores, regional quota or `QuotaExceeded`, that is a subscription limit, not a mistake. Look at `az vm list-usage -l eastus -o table` (container instances have their own limit under *Container Instances* in the portal's **Quotas** page), ask for a small increase there (a normal request, usually approved in minutes), or try another region such as `westus2` in the meantime. Do not be afraid of quota requests: everyone makes them.
+
 > [!TIP]
 > **Stuck?** `AuthorizationPermissionMismatch` for the writer: the role assignment has not propagated yet (wait two minutes) or has the wrong scope. `LOGIN_FAILED` in the job: the identity is not attached to the container, or the client ID is wrong. `StorageAccountAlreadyTaken`: pick another name. `RoleAssignmentExists`: you already created it. The job stays `Waiting`: the image pull takes a minute.
 
