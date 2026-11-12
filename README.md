@@ -22,11 +22,18 @@
 
 ## 🎬 The situation
 
-<p align="center"><img src="assets/gifs/situation.gif" width="300" alt="Animation: az role assignment create"></p>
+<p align="center"><img src="assets/gifs/situation.gif" width="300" alt="A shared key replaced by identities with narrow roles"></p>
 
-Beanie keeps a receipt for every order as a small JSON file in Azure Blob Storage. The first version, written in a hurry, used the **storage account key**: one long string that grants *everything* on the account. It was pasted into an environment variable, then into a screenshot, then into a chat. Last week it appeared in a public repository. Anyone who found it could read every receipt and delete them all.
+```text
+TABLETOP EXERCISE - "The key in the public repository"
+Inject 1 : Beanie keeps each order receipt as a JSON file in Azure Blob Storage.
+Inject 2 : the first version used the storage account key: one string that grants everything.
+Inject 3 : the key was pasted into an environment variable, then a screenshot, then a chat.
+Inject 4 : last week it appeared in a public repository.
+Question : anyone who found it could read every receipt and delete them all. What now?
+```
 
-The fix is not "rotate the key". The fix is to make the key **worthless** and to give the application an identity that can do exactly what it needs, nothing more. In Azure that means three things working together: a storage account that **refuses key-based access**, **managed identities** (identities with no password, handed to a workload by Azure itself), and **role assignments scoped to a single container**. You will build all three, then prove it by running two real containers, one that may write receipts and one that may only read them.
+The answer is not "rotate the key". The answer is to make the key **worthless** and to give the application an identity that can do exactly what it needs, nothing more. In Azure that is three things working together: a storage account that **refuses key-based access**, **managed identities** (identities with no password, handed to a workload by Azure itself), and **role assignments scoped to a single container**. You will run the exercise for real with two containers, one that may write receipts and one that may only read them.
 
 > [!IMPORTANT]
 > **Your mission**
